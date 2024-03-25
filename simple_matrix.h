@@ -1,60 +1,32 @@
 #pragma once
-#include <iostream>
-#include <cmath>
-using namespace std;
+#include "matrix.h"
 
-template <typename T, size_t rows, size_t cols>
-class Matrix {
-protected:
-	T data[rows][cols];
-
+template<typename T, size_t size>
+class simpleMatrix : public Matrix<T, size, size> {
 public:
-    Matrix(const T(&inputData)[rows][cols]) {
-        for (size_t i = 0; i < rows; ++i) {
-            for (size_t j = 0; j < cols; ++j) {
-                data[i][j] = inputData[i][j];
-            }
-        }
-    }
+	simpleMatrix(T(&inputData)[size][size]) : Matrix<T, size, size>(inputData) {}
 
-    virtual T maxElement() {
-        T maxElement = data[0][0];
-        for (size_t i = 0; i < rows; ++i) {
-            for (size_t j = 0; j < cols; ++j) {
-                if (data[i][j] > maxElement) {
-                    maxElement = data[i][j];
-                }
-            }
-        }
-        return maxElement;
-    }
-
-    virtual double norm() {
-        double sumOfSquares = 0.0;
-        for (size_t i = 0; i < rows; ++i) {
-            for (size_t j = 0; j < cols; ++j) {
-                sumOfSquares += data[i][j] * data[i][j];
-            }
-        }
-        return sqrt(sumOfSquares);
-    }
-
-    friend ostream& operator<<(ostream& os, const Matrix& matrix) {
-		for (size_t i = 0; i < rows; ++i) {
-			for (size_t j = 0; j < cols; ++j) {
-				os << matrix.data[i][j] << " ";
-			}
-			os << endl;
-		}
-		return os;
-	}
-
-    friend istream & operator>>(istream& is, Matrix& matrix) {
-        for (size_t i = 0; i < rows; ++i) {
-			for (size_t j = 0; j < cols; ++j) {
-				is >> matrix.data[i][j];
+	T maxElement() override {
+		T maxElement = this->data[0][0];
+		for (size_t i = 0; i < size; ++i) {
+			for (size_t j = 0; j < size; ++j) {
+				if (this->data[i][j] > maxElement) {
+					maxElement = this->data[i][j];
+				}
 			}
 		}
-		return is;
+		return maxElement;
 	}
+
+	double norm() override {
+		T sumOfSquares = 0.0;
+		for (size_t i = 0; i < size; ++i) {
+			for (size_t j = 0; j < size; ++j) {
+				sumOfSquares += this->data[i][j] * this->data[i][j];
+			}
+		}
+		return sqrt(sumOfSquares);
+	}
+
+	
 };

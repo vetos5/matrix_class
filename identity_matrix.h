@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "simple_matrix.h"
 
 template<typename T, size_t size>
@@ -9,4 +9,10 @@ public:
             this->data[i][i] = 1; 
         }
     }
+
+
+    double norm() override {
+        return sqrt(size); 
+    }
 };
+	
